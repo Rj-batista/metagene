@@ -72,6 +72,37 @@ def get_arguments():
 #==============================================================
 # Main program
 #==============================================================
+def read_fasta(amplicon_file, minseqlen): 
+    if amplicon_file.endswith(".gz"): 
+        with gzip.open(amplicon_file,"rb") as file: 
+            for line in file 
+                sequence=next(file) 
+                if len(sequence)>=minseqlen: 
+                    yield(seq) 
+    else: 
+        with open(amplicon_file, "r") as files: 
+            sequence_2="" 
+            for lines in files: 
+                if not lines.startswith(">"):
+                sequence_2=sequence_2=line.strip() 
+                else: 
+                    if len(seq)>=minseqlen: 
+                        yield(seq) 
+
+def dereplication_fulllength(amplicon_file, minseqlen, mincount):  
+    dict = {}
+    for sequence in read_fasta(amplicon_file, minseqlen):
+        if not sequence in dict:
+            dict[sequence] = 0
+        dict[sequence] += 1
+    for seq, compt in dict: 
+        if count >= mincount: 
+            yield(seq,compt) 
+
+
+
+    
+
 def main():
     """
     Main program function
