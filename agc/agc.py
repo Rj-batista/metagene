@@ -100,8 +100,20 @@ def dereplication_fulllength(amplicon_file, minseqlen, mincount):
             yield(seq,compt) 
 
 
+def get_chunks(sequence,chunk_size):
+    seq=[] 
+    for i in range(0, len(sequence), chunk_size): 
+        seq_part=sequence[i:chunk_size+i] 
+        if len(seq_part)==chunk_size: 
+        seq.append(seq_part) 
+    return(seq) 
 
-    
+def cut_kmer(sequence, kmer_size): 
+    for seq in range(len(sequence)-kmer_size+1): 
+        yield(sequence[seq:seq+kmer_size])  
+
+
+ 
 
 def main():
     """
